@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:myfatoorah_flutter/utils/AppConstants.dart';
 
 class SourceInfo {
@@ -62,7 +62,7 @@ class SourceInfo {
         mOSVersion = androidInfo.version.release;
       } else if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        mOSVersion = iosInfo.systemVersion;
+        mOSVersion = iosInfo.systemVersion ?? '';
       }
     } catch (_) {
       mOSVersion = "";
@@ -85,7 +85,7 @@ class SourceInfo {
       try {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        String machine = iosInfo.utsname.machine;
+        String machine = iosInfo.utsname.machine ?? '';
         if (iosInfo.isPhysicalDevice) {
           if (machine.toLowerCase().contains("iphone"))
             type = "phone";
@@ -111,10 +111,10 @@ class SourceInfo {
     try {
       if (Platform.isAndroid) {
         AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        id = androidInfo.androidId;
+        id = androidInfo.id;
       } else if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        id = iosInfo.identifierForVendor;
+        id = iosInfo.identifierForVendor ?? '';
       }
     } catch (_) {}
 
